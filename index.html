@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>simple crystal game</title>
 
+<!-- Latest compiled and minified CSS & JS -->
+<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      
+</head>
+
+<body>
+<div class="container" >
+    <!-- Jumbotron for Title -->
+  <div class="jumbotron"> 
+    <div class="container">
+        <h1 class="text-center", style= "font-family: magneto">Crystal Game</h1>
+        <h3 class="text-center">You will be given a <b><u>random target score</u></b> at the start of the game.</h3>
+    
+        <h3 class="text-center">  There are four crystals below.</h3>
+        <h3 class="text-center"> By clicking on a crystal, the points assigned to that crytal to your total score.</h3>
+          
+        <h3 class="text-center">Win by matching your total to the target number.</h3> 
+        <h3 class="text-center">If you exceed target score, you lose.</h3>
+          
+        <h4 class="text-center">The value of each crystal is hidden until you click on it.</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="num-guess">
+        <div class="col-lg-6">
+  <h1>Number to Guess: <span id="number-to-guess"></span></h1>
+        </div>
+        
+        <div id= "stats">
+          <h2>Total Wins: <span id="wins"></span></h2>
+        </div>
+          
+        <div id= "stats">
+          <h2>Total Losses: <span id="losses"></span></h2>
+        </div>
+
+        <h3>Game Score: <span id="counter"></span></span></h3>
+
+  
+
+  <!-- Note that this div is now empty. We will fill it dynamically -->
+ <div id="crystals">
+  </div>
+
+  <!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+  var targetNumber = 66;
+  var wins = 0;
+  var losses = 0;
+  var crystals = $("#crystals");
+  var counter = 0;
+  var range = 0;
+  var minRange = 19;
+  var maxRange = 120;
+  var imageCrystal;
+  var numberOptions = [10, 20, 3, 7];
+
+    $("#number-to-guess").text(targetNumber);
+    $("#wins").text(wins);
+    $("#losses").text(losses);
+    $("#counter").text(counter);
+
+   
+// function to establish crystals, images & values prior to the first click
+//borrowed this set-up (& preserrved the comments) from Index12 set-up except changed variable names to reflect camelBack standard
+
+function setData(){
+      
+      $('.crystalImage').remove();
+      numberOptions.forEach(function(num){
+ 
+            num = Math.floor(Math.random() * 12 + 1);
+
+            //if I had achieved functionality sooner would have built an array of "lost treasures" images & rotated them in & out of the game at each reset
+            var imageCrystal = $("<img>");
+
+            imageCrystal.addClass("crystalImage");
+
+            // Each imageCrystal will be given a src link to the crystal image
+            imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+            // Each imageCrystal will be given a data attribute called data-crystalValue.
+            // This data attribute will be set equal to the array value.
+            imageCrystal.attr("dataCrystalValue", num);
+
+            // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
+            crystals.append(imageCrystal);
+      });
+}
+    //borrowed this set-up from Index12 set-up except changed variable names to reflect camelBack standard in Javascript
+    // This time, our click event applies to every single crystal on the page. Not just one.
+    setData();
+    
+    crystals.on("click", ".crystalImage", function () {
+      $("#counter").text(counter);
+
+      // Determining the crystal's value requires us to extract the value from the data attribute.
+      // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
+      // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
+      // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
+
+      crystalValue = ($(this).attr("dataCrystalValue"));
+      crystalValue = parseInt(crystalValue);
+
+      // Every click, from every crystal adds to the global counter.
+      counter += crystalValue;
+      $("#counter").text(counter);
+
+      if (counter === targetNumber) {
+        wins++;
+        $("#wins").text(wins);
+        counter = 0;
+        $("#counter").text(counter);
+        alert("You win!");
+        setData();
+        rangeFinder();
+        $("#number-to-guess").text(targetNumber);
+      }
+
+      else if (counter >= targetNumber) {
+        losses++;
+        $("#losses").text(losses);
+        counter = 0;
+        $("#counter").text(counter);
+        alert("you lose!");
+        setData();
+        rangeFinder();
+        $("#number-to-guess").text(targetNumber);
+      }
+
+  
+  function rangeFinder() {
+        targetNumber = Math.floor((Math.random() * ((maxRange - minRange)) + 1) + minRange);
+      }
+
+var crystalNum = 0;
+
+    function assignNum() {
+      crystalNum = Math.floor((Math.random() * 12) + 1);
+    }
+});
+
+
+  </script>
+  </div>
+  </body>
+  
+  </html>

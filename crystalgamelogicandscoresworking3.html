@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>simple crystal game</title>
+
+<!-- Latest compiled and minified CSS & JS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      
+  
+  <!-- reset css, css, bootstrap ..jumbotron for intro verbiage **find that file! -->
+  <style type="text/css">
+
+
+    .crystalImage {
+      width: 200px;
+      height: 200px;
+      padding: 50px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Number to Guess: <span id="number-to-guess"></span></h1>
+  <h2>Total Wins: <span id="wins"></span></h2>
+  <h2>Total Losses: <span id="losses"></span></h2>
+  <h3>Game Score: <span id="counter"></span></span></h3>
+
+  
+
+  <!-- Note that this div is now empty. We will fill it dynamically -->
+ <div id="crystals">
+  </div>
+
+  <!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+  var targetNumber = 66;
+  var wins = 0;
+  var losses = 0;
+  var crystals = $("#crystals");
+  var counter = 0;
+  var range = 0;
+  // var rangeThisGame = 0;
+  var minRange = 19;
+  var maxRange = 120;
+  var imageCrystal;
+  var numberOptions = [10, 20, 3, 7];
+
+    $("#number-to-guess").text(targetNumber);
+    $("#wins").text(wins);
+    $("#losses").text(losses);
+    $("#counter").text(counter);
+
+    //function newGame(category) {
+    //   category++;
+    //    rangeFinder();
+    //    newTarget();
+    //    assignNum();
+    //    screenUpdate();
+    // }
+
+    // figure out how to reverse these assigments
+    //    crystalValue = ($(this).attr("dataCrystalValue"));
+    // crystalValue = parseInt(crystalValue);
+
+    //function resetGame() {
+    //        counter = 0;
+    //        $("#counter").text(counter);
+    //        reviseValues();
+    //        rangeFinder();
+    //        $("#number-to-guess").text(targetNumber);
+    //        console.log("winner!", wins, "new#", targetNumber);
+    //  }
+    // Next we create a for loop to create crystals for every numberOption.
+
+function setData(){
+        var numberOptions = [10, 20, 3, 7];
+        var html;
+        var src = "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg";
+        numberOptions.forEach(function(num){
+
+          num = Math.floor(Math.random() * 12 + 1);
+
+          
+            
+          html=`<img src='${src}' class='crystalImage' dataCrystalValue='${num}'>`;
+
+          document.querySelector('#crystals').innerHTML = html;
+      
+      
+      // For each iteration, we will create an imageCrystal
+      // var imageCrystal = $("<img>");
+
+      // // First each crystal will be given the class ".crystal-image".
+      // // This will allow the CSS to take effect.
+      // imageCrystal.addClass("crystalImage");
+
+      // // Each imageCrystal will be given a src link to the crystal image
+      // imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+      // // Each imageCrystal will be given a data attribute called data-crystalValue.
+      // // This data attribute will be set equal to the array value.
+      // imageCrystal.attr("dataCrystalValue", num);
+
+      // // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
+      // crystals.append(imageCrystal);
+
+      });
+      
+
+  
+}
+    // console.log(crystals);
+
+    // This time, our click event applies to every single crystal on the page. Not just one.
+    setData();
+    crystals.on("click", ".crystalImage", function () {
+      $("#counter").text(counter);
+
+      // Determining the crystal's value requires us to extract the value from the data attribute.
+      // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
+      // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
+      // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
+
+      crystalValue = ($(this).attr("dataCrystalValue"));
+      console.log("cv= strng?", crystalValue);
+      crystalValue = parseInt(crystalValue);
+      console.log("after parseint cv=#?", crystalValue, ($(this).attr("dataCrystalValue")));
+      // We then add the crystalValue to the user's "counter" which is a global variabl
+      // Every click, from every crystal adds to the global counter.
+      counter += crystalValue;
+      $("#counter").text(counter);
+
+      // All of the same game win-lose logic applies. So the rest remains unchanged.
+      //    alert("New score: " + counter);
+      //    $('counter').text(counter);
+
+      if (counter === targetNumber) {
+        wins++;
+        $("#wins").text(wins);
+        counter = 0;
+        $("#counter").text(counter);
+        alert("You win!");
+        setData();
+        //        assignNum();
+        rangeFinder();
+        console.log("#1 b ", targetNumber);
+        $("#number-to-guess").text(targetNumber);
+        console.log("winner!", wins, "new#", targetNumber);
+      }
+
+      else if (counter >= targetNumber) {
+        losses++;
+        $("#losses").text(losses);
+        counter = 0;
+        $("#counter").text(counter);
+        alert("you lose!");
+        console.log("#1", targetNumber);
+        setData();
+        //        assignNum();
+        rangeFinder();
+        console.log("#2", targetNumber);
+        $("#number-to-guess").text(targetNumber);
+        console.log("Loss!", losses, "new#", targetNumber);
+      }
+
+  
+  function rangeFinder() {
+        console.log("initials fn", range, targetNumber);
+        /*  range = Math.floor(Math.random() * baseRange);  */
+        targetNumber = Math.floor((Math.random() * ((maxRange - minRange)) + 1) + minRange);
+        console.log("net range", Math.floor(Math.random() * (maxRange - minRange)), "targetNumber =net range+20?", targetNumber);
+      }
+
+var crystalNum = 0;
+
+    function assignNum() {
+ //     console.log("enter assignNum");
+      crystalNum = Math.floor((Math.random() * 12) + 1);
+ //     console.log("AssignNum fn, crystalNum", crystalNum, "targetNumber", targetNumber);
+    }
+
+    //function newTarget() {
+    //  targetNumber = Math.floor(rangeThisGame * (Math.random())+1);
+    //  console.log("newTarget targetNumber", targetNumber); 
+    // }
+
+// //    function reviseValues() {
+//  //     for (i = 0; i < numberOptions.length; i++) {
+//  /       console.log("reviseValues #1");
+//         numberOptions[i] = Math.floor(Math.random() * 12 + 1);
+//           var numstring;
+//           numstring = numberOptions[i].toString();
+          
+//         $(".imageCrystal").attr("dataCrystalValue", numstring); 
+//         console.log("reviseValues #2");
+//       }
+//     }
+ 
+});
+
+
+  </script>
+  </body>
+  
+  </html>

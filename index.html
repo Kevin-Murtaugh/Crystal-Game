@@ -3,6 +3,10 @@
 <head>
   <title>simple crystal game</title>
 
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
 <!-- Latest compiled and minified CSS & JS -->
 <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -14,12 +18,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
     <style type="text/css">
-
+      .jumbotron {
+        background: aqua;
+      }
 
       .crystalImage {
         width: 200px;
         height: 200px;
-        padding: 50px;
+        padding: 25px;
+        margin-left: 25px;
+      }
+      .footer {
+        background: aqua;
+        font-family: magneto;
+
+        height: 100px;
+        width: 100%;
       }
     </style>
       
@@ -35,7 +49,7 @@
         <h3 class="text-center">You will be given a <b><u>random target score</u></b> at the start of the game.</h3>
     
         <h3 class="text-center">  There are four crystals below.</h3>
-        <h3 class="text-center"> By clicking on a crystal, the points assigned to that crytal to your total score.</h3>
+        <h3 class="text-center"> By clicking on a crystal, points assigned to that crystal are added to your total score.</h3>
           
         <h3 class="text-center">Win by matching your total to the target number.</h3> 
         <h3 class="text-center">If you exceed target score, you lose.</h3>
@@ -91,7 +105,7 @@
 
    
 // function to establish crystals, images & values prior to the first click
-//borrowed this set-up (& preserrved the comments) from Index12 set-up except changed variable names to reflect camelBack standard
+//borrowed this set-up (& preserrved the comments) from Index12 set-up in class except changed some of the svariable names to reflect camelBack standard
 
 function setData(){
       
@@ -125,7 +139,7 @@ function setData(){
 
       // Determining the crystal's value requires us to extract the value from the data attribute.
       // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
-      // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
+      // Using the .attr("dataCrystalValue") allows us to grab the value out of the "dataCrystalValue" attribute.
       // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
 
       crystalValue = ($(this).attr("dataCrystalValue"));
@@ -171,6 +185,24 @@ var crystalNum = 0;
 
 
   </script>
+  </div>
+  
+
+  <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8"></div>
+                <div class="col-lg-4">
+                  <h4>Game courtesy of Kevin Murtaugh.</h4>
+                </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-5"></div>
+                <div class="col-lg-7">
+                  <h4>...UCF Full Stack Developer Bootcamp, graduated June 15, 2018.</h4>
+                </div>
+          </div>  
+    </footer>
   </div>
   </body>
   
